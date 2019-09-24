@@ -1,0 +1,36 @@
+main.py: 
+    Input: Single point cloud, Output: If "Compose_Point_Cloud" is true, save the euclidean clustering point cloud result.  If "Compose_Raw_Range_Image" is true, save the range image transformed from the point cloud. 
+    Modified parameters:
+	data_dir = './example_data/raw_point_cloud.pcd'
+	clustered_point_cloud_save_dir = './results/ec_point_cloud.pcd'
+	range_image_raw_save_dir = './results/range_image_raw.png'
+	Compose_Point_Cloud = False
+	Compose_Raw_Range_Image = True
+
+
+
+prepare_paper_figures.py:
+    Input: Single point cloud, Output: 1) point cloud after statistical outlier removal filter. 2) ground extraction point cloud, ground is green and deground is red. 3) euclidean clustering result with bounding boxes.
+    Modified parameters:
+	data_dir = './example_data/raw_point_cloud.pcd'
+	result_root = './results'
+	filtered_point_cloud_save_dir = os.path.join(result_root, "filtered_original_point_cloud.pcd")
+	extract_ground_point_cloud_save_dir = os.path.join(result_root, "ground_extracted_point_cloud.pcd")
+	extract_ground_clustered_point_cloud_save_dir = os.path.join(result_root, "ec_point_cloud_after_ground_extraction.pcd")
+
+
+
+KITTI_velodyne_to_range_image_batch.py:
+    Input: the folder of the batch point cloud frames. Output: the range images transformed from all of these point cloud in that folder.
+    Modified parameters:
+	lidar_angular_xy_range_ = 360
+	max_lidar_angular_z_ = 2
+	min_lidar_angular_z_ = -24.5
+	range_x_ = 64
+	range_y_ = 2000
+	nearest_bound_ = 0.5
+	furthest_bound_ = 120
+
+	KITTI_raw_data_path = '/data/KITTI_rawdata'
+	sequence_name = '2011_09_26_drive_0009_extract'
+	save_root = '/data/FutureGAN_data/KITTI_resized_128x128'

@@ -13,12 +13,14 @@ import imageio
 data_dir = './example_data/raw_point_cloud.pcd'
 clustered_point_cloud_save_dir = './results/ec_point_cloud.pcd'
 range_image_raw_save_dir = './results/range_image_raw.png'
+Compose_Point_Cloud = False
+Compose_Raw_Range_Image = True
 
 pc_o3d = o3d.io.read_point_cloud(data_dir)
 # o3d.visualization.draw_geometries([pc_o3d])
 pc_nparray = np.asarray(pc_o3d.points).astype(np.float32)
 
-Compose_Point_Cloud = False
+
 if Compose_Point_Cloud:
     # Extract ground
     pc_pcl = pcl.PointCloud(pc_nparray)
@@ -95,7 +97,7 @@ if Compose_Point_Cloud:
     # pcl.save(cloud_cluster, ss)
 # IPython.embed()
 
-Compose_Raw_Range_Image = True
+
 if Compose_Raw_Range_Image:
     lidar_angular_xy_range_ = 360
     max_lidar_angular_z_ = 2

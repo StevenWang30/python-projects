@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="10a39d95-e1f6-4fd7-a263-8f9cc87c7dce" name="Default Changelist" comment="" />
+    <list default="true" id="10a39d95-e1f6-4fd7-a263-8f9cc87c7dce" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../point_cloud_compression/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../point_cloud_compression/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../point_cloud_compression/KITTI_velodyne60x4000_to_img128x128.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../point_cloud_compression/draw_picture_forSun.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../point_cloud_compression/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../point_cloud_compression/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../point_cloud_compression/pcl_filters.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../point_cloud_compression/pcl_filters.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../point_cloud_compression/results/ec_point_cloud.pcd" beforeDir="false" afterPath="$PROJECT_DIR$/../../point_cloud_compression/results/ec_point_cloud.pcd" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,7 +25,7 @@
         <entry file="file://$PROJECT_DIR$/Problem3.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="623">
-              <caret line="170" column="39" lean-forward="true" selection-start-line="170" selection-start-column="39" selection-end-line="170" selection-end-column="39" />
+              <caret line="170" column="39" selection-start-line="170" selection-start-column="39" selection-end-line="170" selection-end-column="39" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -36,6 +44,9 @@
       </file>
     </leaf>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
@@ -49,6 +60,7 @@
     <option name="width" value="1855" />
     <option name="height" value="1084" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
@@ -168,7 +180,7 @@
     <entry file="file://$PROJECT_DIR$/Problem3.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="623">
-          <caret line="170" column="39" lean-forward="true" selection-start-line="170" selection-start-column="39" selection-end-line="170" selection-end-column="39" />
+          <caret line="170" column="39" selection-start-line="170" selection-start-column="39" selection-end-line="170" selection-end-column="39" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
