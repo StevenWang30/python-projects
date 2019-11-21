@@ -1,3 +1,5 @@
+**Description**
+
 main.py: 
     Input: Single point cloud, Output: If "Compose_Point_Cloud" is true, save the euclidean clustering point cloud result.  If "Compose_Raw_Range_Image" is true, save the range image transformed from the point cloud. 
     Modified parameters:

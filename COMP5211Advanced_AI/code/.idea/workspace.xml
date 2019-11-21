@@ -2,13 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="10a39d95-e1f6-4fd7-a263-8f9cc87c7dce" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Problem3.py" beforeDir="false" afterPath="$PROJECT_DIR$/Problem3.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../point_cloud_compression/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../point_cloud_compression/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../point_cloud_compression/KITTI_velodyne60x4000_to_img128x128.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../point_cloud_compression/draw_picture_forSun.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../point_cloud_compression/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../point_cloud_compression/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../point_cloud_compression/pcl_filters.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../point_cloud_compression/pcl_filters.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../point_cloud_compression/results/ec_point_cloud.pcd" beforeDir="false" afterPath="$PROJECT_DIR$/../../point_cloud_compression/results/ec_point_cloud.pcd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../point_cloud_compression/README" beforeDir="false" afterPath="$PROJECT_DIR$/../../point_cloud_compression/README" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -24,8 +20,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Problem3.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="623">
-              <caret line="170" column="39" selection-start-line="170" selection-start-column="39" selection-end-line="170" selection-end-column="39" />
+            <state relative-caret-position="137">
+              <caret line="53" column="26" lean-forward="true" selection-start-line="53" selection-start-column="26" selection-end-line="53" selection-end-column="26" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -55,8 +51,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-1855" />
-    <option name="y" value="1076" />
+    <option name="x" value="1985" />
+    <option name="y" value="-4" />
     <option name="width" value="1855" />
     <option name="height" value="1084" />
   </component>
@@ -132,15 +128,15 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1569235286625</updated>
-      <workItem from="1569235287785" duration="25995000" />
+      <workItem from="1569235287785" duration="26618000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="25995000" />
+    <option name="totallyTimeSpent" value="26618000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1855" y="1076" width="1855" height="1084" extended-state="6" />
+    <frame x="1985" y="-4" width="1855" height="1084" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Favorites" side_tool="true" />
@@ -154,7 +150,7 @@
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.22018349" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.22018349" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -179,8 +175,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Problem3.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="623">
-          <caret line="170" column="39" selection-start-line="170" selection-start-column="39" selection-end-line="170" selection-end-column="39" />
+        <state relative-caret-position="137">
+          <caret line="53" column="26" lean-forward="true" selection-start-line="53" selection-start-column="26" selection-end-line="53" selection-end-column="26" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>

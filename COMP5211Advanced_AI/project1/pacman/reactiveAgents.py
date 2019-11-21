@@ -29,16 +29,82 @@ class NaiveAgent(Agent):
         else:
             return Directions.WEST
 
+
 class PSAgent(Agent):
     "An agent that follows the boundary using production system."
 
     def getAction(self, state):
         ''' Your code goes here! '''
-        return Directions.NORTH
+        ''' [ northwest 0, north 1, northeast 2, east 3, southeast 4, south 5, southwest 6, west 7 ] '''
+        sense = state.getPacmanSensor()
+        if sense[1] and not sense[3]:
+            return Directions.EAST
+        elif sense[3] and not sense[5]:
+            return Directions.SOUTH
+        elif sense[5] and not sense[7]:
+            return Directions.WEST
+        elif sense[7] and not sense[1]:
+            return Directions.NORTH
+        elif sense[0]:
+            return Directions.NORTH
+        elif sense[2]:
+            return Directions.EAST
+        elif sense[4]:
+            return Directions.SOUTH
+        elif sense[6]:
+            return Directions.WEST
+        elif not sense[0] and not sense[1] and not sense[2] and not sense[3] and not sense[4] and not sense[5] and not sense[6] and not sense[7]:
+            return Directions.NORTH
+        else:
+            return Directions.STOP
 
 class ECAgent(Agent):
     "An agent that follows the boundary using error-correction."
 
+    def moveValidation(self, input, weight):
+        sum = 0
+        for i, j in zip(input, weight):
+            sum = sum + (i * j)
+        if sum > 0:
+            return 1
+        else:
+            return 0
+
     def getAction(self, state):
         ''' Your code goes here! '''
-        return Directions.NORTH
+        ''' [ northwest 0, north 1, northeast 2, east 3, southeast 4, south 5, southwest 6, west 7 ] '''
+        north = [0.1, -0.2, -0.2, 0.0, 0.0, 0.0, 0.0, 0.1]
+        south = [0.0, 0.0, 0.0, 0.1, 0.1, -0.2, -0.2, 0.0]
+        west = [-0.2, 0.0, 0.0, 0.0, 0.0, 0.1, 0.1, -0.2]
+        east = [0.0, 0.1, 0.1, -0.2, -0.2, 0.0, 0.0, 0.0]
+        sense = state.getPacmanSensor()
+        canMoveNorth = self.moveValidation(sense, north)
+        canMoveSouth = self.moveValidation(sense, south)
+        canMoveWest = self.moveValidation(sense, west)
+        canMoveEast = self.moveValidation(sense, east)
+        if canMoveNorth == 1:
+            direction = Directions.NORTH
+        if canMoveSouth == 1:
+            direction = Directions.SOUTH
+        if canMoveWest == 1:
+            direction = Directions.WEST
+        if canMoveEast == 1:
+            direction = Directions.EAST
+        valid = 0
+        valid = valid + canMoveNorth
+        valid = valid + canMoveSouth
+        valid = valid + canMoveWest
+        valid = valid + canMoveEast
+        if valid == 1:
+            return direction
+        else:
+            if canMoveNorth == 1:
+                return Directions.NORTH
+            elif canMoveEast == 1:
+                return Directions.EAST
+            elif canMoveSouth == 1:
+                return Directions.SOUTH
+            elif canMoveWest == 1:
+                return Directions.WEST
+            else:
+                return Directions.NORTH

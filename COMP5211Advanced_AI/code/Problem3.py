@@ -138,7 +138,6 @@ def main(args):
         # print("threshold: ", threshold_gen_i)
         print("fitness_mean: ", np.mean(fitness_ratio), " fitness_max: ", np.max(fitness_ratio))
 
-
         fitness_max_this = np.max(fitness_ratio)
 
         if fitness_max_save != fitness_max_this:
@@ -153,7 +152,6 @@ def main(args):
             print("new prob_threshold is ", prob_threshold, " new rand_add_max = ", rand_add_max)
         else:
             prob_threshold = prob_threshold_init
-
 
         if np.max(fitness_ratio) == 49:
             print("Reach the best result.")
