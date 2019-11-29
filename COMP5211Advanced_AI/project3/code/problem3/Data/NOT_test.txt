@@ -1,0 +1,2 @@
+We should eat apple.
+We should not eat apple.

@@ -1,0 +1,63 @@
+Query: 
+  Special admission requirements for HKPFS?
+Possible problem: 
+  Are there any special admission requirements for HK PhD Fellowship application?
+Answer: 
+  In addition to meeting the HKUST admission requirements, you are required to demonstrate the following abilities in your application profile.
+
+Query: 
+  Can I apply for HK PhD Fellowship?
+Possible problem: 
+  Am I eligible to apply for the HK PhD Fellowship Scheme?
+Answer: 
+  HKPFS is an internationally recognized award aiming to draw the best PhD students around the globe to Hong Kong. You are welcome to apply if you are interested in pursuing PhD studies at HKUST. Please check the admission requirements here.
+
+Query: 
+  When will I get the admission offer?
+Possible problem: 
+  When will I be notified of an admission offer?
+Answer: 
+  Successful applicants will receive an email notification. Please log in to the online system to keep track of your application status. Individual program offices will issue offers according to their own schedules. Unsuccessful applicants will normally be notified of the outcome towards the end of the admission cycle. For instance, unsuccessful applicants who seek admission in Fall term will normally be notified in the summer before program commencement.
+
+Query: 
+  University housing?
+Possible problem: 
+  Will I be provided with University housing?
+Answer: 
+  For full-time research postgraduate students, the University will provide guaranteed university accommodation in the first 2 years of full-time studies. In general, taught postgraduate students are required to arrange their accommodation off-campus. Please contact the Off-Campus Housing Section of Student Housing & Residential Life Office, which provides general assistance for students who are looking for off-campus accommodation.
+
+Query: 
+  need submit GRE score for application?
+Possible problem: 
+  Am I required to submit GRE/GMAT score for application?
+Answer: 
+  Only a few programs require applicants to submit GMAT or GRE score for application. You may refer to the information on "Admission Requirements" tab in the individual program page.
+
+Query: 
+  What documents do I need when application?
+Possible problem: 
+  What documents do I need to upload for application?
+Answer: 
+  Visit here to find out what application materials are required to upload for application. We require hard copies of the documents for further verification only after you are given an offer.
+
+Query: 
+  Do I need CV in application?
+Possible problem: 
+  Do I need to include a CV/ personal statement in my application?
+Answer: 
+  For research postgraduate studies, CV/ personal statement is optional. For taught postgraduate studies, please check directly with the Program. Their contact information is available in the "General Information" tab of individual program page.
+
+Query: 
+  Can I change my application after submission?
+Possible problem: 
+  Can I make changes to my application after submission?
+Answer: 
+  After submissions, only the following changes are allowed: Change personal contact details, Input final GPA/average mark after program completion, Add new scores of IELTS/TOEFL or other public examinations which are not available earlier, Upload supporting documents, and Invite referees.
+
+Query: 
+  When should my referees provide reference report?
+Possible problem: 
+  When should my referees submit the reference report?
+Answer: 
+  We expect referees to send us the referee report online within 14 days of the invitation. For Hong Kong PhD Fellowship applicants, your reference reports should reach us by early December.
+
