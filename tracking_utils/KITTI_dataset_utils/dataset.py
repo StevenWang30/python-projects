@@ -6,7 +6,7 @@ import sys
 # BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # sys.path.append(BASE_DIR)
 # sys.path.append(os.path.join(BASE_DIR, 'utils'))
-from tracking_utils.utils import *
+from tracking_utils.KITTI_dataset_utils.utils import *
 import open3d as o3d
 
 # type2class={'Car':0, 'Van':1, 'Truck':2, 'Pedestrian':3,

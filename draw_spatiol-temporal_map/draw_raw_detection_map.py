@@ -6,8 +6,10 @@ import math
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
-from KITTI_dataset_utils.kittitrackingdata_second import KittiTrackingData
-from tracking_utils.dataset import transform_points
+# import sys
+# sys.path.append("..")
+from tracking_utils.KITTI_dataset_utils.kittitrackingdata_second import KittiTrackingData
+from tracking_utils.KITTI_dataset_utils.dataset import transform_points
 
 """Parse input arguments."""
 parser = argparse.ArgumentParser(description='SORT demo')
