@@ -6,9 +6,7 @@ import math
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
-# import sys
-# sys.path.append("..")
-from tracking_utils.KITTI_dataset_utils.kittitrackingdata_second import KittiTrackingData
+from tracking_utils.KITTI_dataset_utils.kittitrackingdata_second import *
 from tracking_utils.KITTI_dataset_utils.dataset import transform_points
 
 """Parse input arguments."""
@@ -20,7 +18,7 @@ parser.add_argument('--detection_data_pkl',
                     default='/data/KITTI_object_tracking/results_PointRCNNTrackNet/detection_pkl/training_result.pkl')
 parser.add_argument('--data-dir', dest='data_dir', default='/data/KITTI_object_tracking/training')
 
-parser.add_argument('--map_duration_frame', default=200)
+parser.add_argument('--map_duration_frame', default=20)
 
 parser.add_argument('--is_test', default=False)
 parser.add_argument('--seq_start', default= 0 )
@@ -69,11 +67,12 @@ def draw_points(points, save_path=None, save=False, vis=False, v3d=False):
 
 
 def get_center_position_Lidar(det_frame):
-    calib_f1, img_f1, label_f1, pc_f1 = KittiTrackingData(root_dir=args.data_dir,
-                                                          seq=det_frame['metadata']['image_seq'],
-                                                          idx=det_frame['metadata']['image_idx'],
-                                                          is_test=args.is_test).read_data()
-    T_cam_velo = calib_f1.Tr_cam_to_velo
+    # calib_f1, img_f1, label_f1, pc_f1 = KittiTrackingData(root_dir=args.data_dir,
+    #                                                       seq=det_frame['metadata']['image_seq'],
+    #                                                       idx=det_frame['metadata']['image_idx'],
+    #                                                       is_test=args.is_test).read_data()
+    # T_cam_velo = calib_f1.Tr_cam_to_velo
+    T_cam_velo = calib_seq.Tr_cam_to_velo
     centers = []
     for i in range(len(det_frame['location'])):
         center = transform_points(np.array([det_frame['location'][i]]), T_cam_velo)[0]
@@ -88,6 +87,10 @@ for seq in range(args.seq_start, args.seq_end + 1):
     output_dir = os.path.join(args.output_dir, '%4d' % seq)
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
+
+    # get calib
+    calib_path = os.path.join(args.data_dir, "calib", '%04d.txt' % seq)
+    calib_seq = KittiCalib(calib_path).read_calib_file()
 
     # get the detection result in this sequence
     det_seq = []
