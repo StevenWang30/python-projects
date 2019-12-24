@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8e83b6aa-5a73-4ae8-b54b-9af60940909f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../draw_spatiol-temporal_map/draw_detection_tracking_map.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../draw_spatiol-temporal_map/save_tracking_txt_to_pkl.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SORT_3D" beforeDir="false" afterPath="$PROJECT_DIR$/../SORT_3D" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../draw_spatiol-temporal_map/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../draw_spatiol-temporal_map/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../draw_spatiol-temporal_map/draw_detection_tracking_map.py" beforeDir="false" afterPath="$PROJECT_DIR$/../draw_spatiol-temporal_map/draw_detection_tracking_map.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../draw_spatiol-temporal_map/draw_raw_detection_map.py" beforeDir="false" afterPath="$PROJECT_DIR$/../draw_spatiol-temporal_map/draw_raw_detection_map.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../tracking_by_detection_pkl" beforeDir="false" afterPath="$PROJECT_DIR$/../tracking_by_detection_pkl" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
@@ -42,8 +40,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/KITTI_dataset_utils/kittitrackingdata_second.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="456">
-              <caret line="24" column="72" selection-start-line="24" selection-start-column="72" selection-end-line="24" selection-end-column="72" />
+            <state relative-caret-position="703">
+              <caret line="64" column="66" lean-forward="true" selection-start-line="64" selection-start-column="21" selection-end-line="64" selection-end-column="66" />
               <folding>
                 <element signature="e#127#136#0" expanded="true" />
               </folding>
@@ -105,6 +103,7 @@
       <find>read</find>
       <find>dum</find>
       <find>car</find>
+      <find>np.dot</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -184,12 +183,12 @@
       <option name="presentableId" value="Default" />
       <updated>1576810645391</updated>
       <workItem from="1576810646678" duration="1901000" />
-      <workItem from="1576821065159" duration="3109000" />
+      <workItem from="1576821065159" duration="4473000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="5010000" />
+    <option name="totallyTimeSpent" value="6374000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="-4" width="1855" height="1084" extended-state="6" />
@@ -278,8 +277,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/KITTI_dataset_utils/kittitrackingdata_second.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="456">
-          <caret line="24" column="72" selection-start-line="24" selection-start-column="72" selection-end-line="24" selection-end-column="72" />
+        <state relative-caret-position="703">
+          <caret line="64" column="66" lean-forward="true" selection-start-line="64" selection-start-column="21" selection-end-line="64" selection-end-column="66" />
           <folding>
             <element signature="e#127#136#0" expanded="true" />
           </folding>
