@@ -29,7 +29,8 @@ type_whitelist = ('Car', 'Van')
 # tracking_label_data = pickle.load(open(args.tracking_label_pkl, 'rb'))
 
 # process what data
-process_data_path = args.tracking_predict_pkl
+process_data_path = args.detection_data_pkl
+# process_data_path = args.tracking_predict_pkl
 # process_data_path = args.tracking_label_pkl
 process_data = pickle.load(open(process_data_path, 'rb'))
 global_data = copy.deepcopy(process_data)

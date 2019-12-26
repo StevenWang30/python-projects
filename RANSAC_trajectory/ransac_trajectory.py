@@ -3,21 +3,17 @@ import IPython
 import argparse
 import os
 
-from utils import *
+from draw_spatiol_temporal_map.utils import *
 
 
 """Parse input arguments."""
-parser = argparse.ArgumentParser(description='SORT demo')
-parser.add_argument('--display', dest='display', help='Display online tracker output (slow) [False]',
-                    action='store_true')
-parser.add_argument('--output_dir', default='/data/KITTI_object_tracking/spatio-temporal-map/raw_detection_map')
-
+parser = argparse.ArgumentParser(description='RANSAC trajectory')
 parser.add_argument('--detection_data_pkl',
-                    default='/data/KITTI_object_tracking/results_PointRCNNTrackNet/detection_pkl/training_result.pkl')
+                    default='/data/KITTI_object_tracking/results_PointRCNNTrackNet/detection_pkl/training_result_with_global.pkl')
 parser.add_argument('--tracking_predict_pkl',
-                    default='/data/KITTI_object_tracking/results_PointRCNNTrackNet/tracking_pkl/training_result.pkl')
+                    default='/data/KITTI_object_tracking/results_PointRCNNTrackNet/tracking_pkl/training_result_with_global.pkl')
 parser.add_argument('--tracking_label_pkl',
-                    default='/home/skwang/PYProject/draw_spatiol-temporal_map/pkl_data/training_label_result.pkl')
+                    default='/home/skwang/PYProject/draw_spatiol-temporal_map/pkl_data/training_label_result_with_global.pkl')
 parser.add_argument('--pose_dir',
                     default='/data/KITTI_object_tracking/training/pose')
 
@@ -41,12 +37,11 @@ print("******************************************************\n")
 
 type_whitelist = ('Car', 'Van')
 
-
-
-dt_data = pickle.load(open(args.detection_data_pkl, 'rb'))
+detection_data = pickle.load(open(args.detection_data_pkl, 'rb'))
 tracking_data = pickle.load(open(args.tracking_predict_pkl, 'rb'))
 tracking_label_data = pickle.load(open(args.tracking_label_pkl, 'rb'))
 
+IPython.embed()
 for seq in range(args.seq_start, args.seq_end + 1):
     output_dir = os.path.join(args.output_dir, '%4d' % seq)
     if not os.path.exists(output_dir):
@@ -57,15 +52,11 @@ for seq in range(args.seq_start, args.seq_end + 1):
     calib_seq = KittiCalib(calib_path).read_calib_file()
     T_cam_velo = calib_seq.Tr_cam_to_velo
 
-    # get pose
-    pose_path = os.path.join(args.pose_dir, '%04d.mat' % seq)
-    pose_seq = load_pose(pose_path)
-
     # map_num = math.ceil(len(det_seq) / args.map_duration_frame)
     MAX_ = 999999
-    for i in range(MAX_):
-        start_idx = args.map_duration_frame * i
-        end_idx = args.map_duration_frame * (i + 1)
+    for m in range(MAX_):
+        start_idx = args.map_duration_frame * m
+        end_idx = args.map_duration_frame * (m + 1)
         # get the detection result in this sequence
         det_seq = []
         for i in range(len(dt_data)):
