@@ -2,10 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2d1980a0-c288-4750-b95c-927e93179f41" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/RANSAC_trajectory_with_car_motion_model.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../SORT_3D" beforeDir="false" afterPath="$PROJECT_DIR$/../SORT_3D" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../draw_spatiol-temporal_map/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../draw_spatiol-temporal_map/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../draw_spatiol-temporal_map/draw_detection_tracking_map.py" beforeDir="false" afterPath="$PROJECT_DIR$/../draw_spatiol-temporal_map/draw_detection_tracking_map.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../draw_spatiol-temporal_map/draw_raw_detection_map.py" beforeDir="false" afterPath="$PROJECT_DIR$/../draw_spatiol-temporal_map/draw_raw_detection_map.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../tracking_by_detection_pkl" beforeDir="false" afterPath="$PROJECT_DIR$/../tracking_by_detection_pkl" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../tracking_utils/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../tracking_utils/.idea/workspace.xml" afterDir="false" />
     </list>
@@ -20,9 +24,9 @@
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="1985" />
-    <option name="y" value="-4" />
+    <option name="y" value="24" />
     <option name="width" value="1855" />
-    <option name="height" value="1084" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -30,17 +34,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="RANSAC_trajectory_with_car_motion_model" type="b2602c69:ProjectViewProjectNode" />
-              <item name="RANSAC_trajectory_with_car_motion_model" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
+      <pane id="ProjectPane" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -81,8 +75,7 @@
     <option name="totallyTimeSpent" value="610000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1985" y="-4" width="1855" height="1084" extended-state="6" />
-    <editor active="true" />
+    <frame x="1985" y="24" width="1855" height="1056" extended-state="6" />
     <layout>
       <window_info id="Favorites" side_tool="true" />
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2498618" />

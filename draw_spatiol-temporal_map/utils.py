@@ -4,6 +4,9 @@ import numpy as np
 from tracking_utils.KITTI_dataset_utils.kittitrackingdata_second import *
 from tracking_utils.KITTI_dataset_utils.dataset import transform_points
 import scipy.io as sio
+import math
+import IPython
+import os
 
 def draw_3d(points, pred_trajectories, label_trajectories, save_path=None, save=False, vis=False):
     # points: [frame, x, y]
@@ -93,8 +96,6 @@ def get_center_position_Lidar(det_frame, T_cam_velo):
     #                                                       seq=det_frame['metadata']['image_seq'],
     #                                                       idx=det_frame['metadata']['image_idx'],
     #                                                       is_test=args.is_test).read_data()
-
-
     centers = []
     for i in range(len(det_frame['location'])):
         center = transform_points(np.array([det_frame['location'][i]]), T_cam_velo)[0]
@@ -102,6 +103,15 @@ def get_center_position_Lidar(det_frame, T_cam_velo):
         center[2] += h / 2
         centers.append(center)
     return centers
+
+
+def get_rotation_y_vec_Lidar(det_frame, T_cam_velo):
+    vecs = []
+    for i in range(len(det_frame['rotation_y'])):
+        ry = det_frame['rotation_y'][i]
+        vec = transform_points(np.array([[-math.sin(ry), 0, math.cos(ry)]]), T_cam_velo)[0]
+        vecs.append(vec)
+    return vecs
 
 
 def get_trajectory(tracking_data, T_cam_velo, pose_seq, type_whitelist=('Car', 'Van'), frame='global'):
@@ -138,17 +148,36 @@ def get_trajectory(tracking_data, T_cam_velo, pose_seq, type_whitelist=('Car', '
 
 
 
-def load_pose(path):
-    mat_data = sio.loadmat(path)
-    raw_data = mat_data['pose']
-    raw_data = np.einsum('kli->ikl', raw_data)
-    data = np.zeros((raw_data.shape[0] + 1, 4, 4))
+def load_pose(velodyne_dir, pose_dir, seq):
+    # from velodyne bin directory read the max pose length.
+    # (KITTI seq 1 lost 176-180 frame bin file. so it is important.
+    dir_path = os.path.join(velodyne_dir, "%04d" % seq)
+    bin_files = os.listdir(dir_path)
+    bin_files.sort(key=lambda x: int(x.split('.')[0]))
+    data_num = int(bin_files[-1].split('.')[0]) + 1
+    data = np.zeros((data_num, 4, 4))
     data[0] = np.asarray([[1.0, 0.0, 0.0, 0.0],
                          [0.0, 1.0, 0.0, 0.0],
                          [0.0, 0.0, 1.0, 0.0],
                          [0.0, 0.0, 0.0, 1.0]])
-    for i in range(raw_data.shape[0]):
-        data[i + 1] = np.dot(np.append(raw_data[i], [[0, 0, 0, 1]], axis=0), data[i])
+
+    pose_path = os.path.join(pose_dir, '%04d.mat' % seq)
+    mat_data = sio.loadmat(pose_path)
+    raw_data = mat_data['pose']
+    raw_data = np.einsum('kli->ikl', raw_data)
+
+    null_num = 0
+    for t in range(data_num - 1):
+        i = t + 1
+        if not os.path.exists(os.path.join(dir_path, "%06d.bin" % i)):
+            data[i] = data[i - 1]
+            null_num += 1
+            # print("null_num + 1:, ", null_num)
+            continue
+        data[i] = np.dot(np.append(raw_data[i - 1 - null_num], [[0, 0, 0, 1]], axis=0), data[i - 1])
+        # print("vel_path:", os.path.join(dir_path, "%06d.bin" % i), "data_i: ", i, " raw_data_i: ", i - 1 - null_num, " * data_i-1: ", i - 1)
+
+    print("null_num is : ", null_num)
     return data
 
 
@@ -156,3 +185,9 @@ def transform_points_from_inertial_to_global(point, T_inertial_global):
     point_4 = np.array(point + [1])
     point_global = np.dot(np.linalg.inv(T_inertial_global), point_4)
     return point_global[:3]
+
+def transform_rotation_y_from_inertial_to_global(ry_vec, T_inertial_global):
+    vec_cam = np.array(list(ry_vec) + [1])
+    vec_global = np.dot(np.linalg.inv(T_inertial_global), vec_cam)
+    scale = math.sqrt(vec_global[0] * vec_global[0] + vec_global[1] * vec_global[1] + vec_global[2] * vec_global[2])
+    return vec_global[:3] / scale

@@ -20,15 +20,14 @@ parser.add_argument('--tracking_label_pkl',
                     default='/home/skwang/PYProject/draw_spatiol-temporal_map/pkl_data/training_label_result.pkl')
 parser.add_argument('--pose_dir',
                     default='/data/KITTI_object_tracking/training/pose')
-parser.add_argument('--velodyne_dir',
-                    default='/data/KITTI_object_tracking/training/velodyne')
 
 parser.add_argument('--data-dir', dest='data_dir', default='/data/KITTI_object_tracking/training')
 parser.add_argument('--method', default='PointRCNN')
 
 parser.add_argument('--frame', default='global', help="frame: -- global, -- inertial")
 
-parser.add_argument('--map_duration_frame', default=200)
+parser.add_argument('--window_size', default=20)
+parser.add_argument('--step_size', default=3)
 
 parser.add_argument('--is_test', default=False)
 parser.add_argument('--seq_start', default= 20 )
@@ -59,7 +58,8 @@ for seq in range(args.seq_start, args.seq_end + 1):
     T_cam_velo = calib_seq.Tr_cam_to_velo
 
     # get pose
-    pose_seq = load_pose(args.velodyne_dir, args.pose_dir, seq)
+    pose_path = os.path.join(args.pose_dir, '%04d.mat' % seq)
+    pose_seq = load_pose(pose_path)
 
     # map_num = math.ceil(len(det_seq) / args.map_duration_frame)
     MAX_ = 999999
@@ -114,7 +114,6 @@ for seq in range(args.seq_start, args.seq_end + 1):
         spatio_temporal_t_x_y_map_points = []
         for j in range(len(det_seq)):
             centers = get_center_position_Lidar(det_seq[j], T_cam_velo)
-            # ry_vecs = get_rotation_y_vec_Lidar(det_seq[j], T_cam_velo)
             for c in range(len(centers)):
                 [x, y, z] = centers[c]
                 t = det_seq[j]['metadata']['image_idx']
@@ -122,9 +121,6 @@ for seq in range(args.seq_start, args.seq_end + 1):
                 if args.frame == 'global':
                     [x_global, y_global, z_global] = transform_points_from_inertial_to_global([x, y, z], pose_seq[t])
                     spatio_temporal_t_x_y_map_points.append([t, x_global, y_global])
-                    # [ry_vec_x_global, ry_vec_y_global, ry_vec_z_global] = transform_rotation_y_from_inertial_to_global(
-                    #     ry_vecs[c], pose_seq[t])
-                    # print("in ", det_seq[j]['metadata'], ", ry_vec: ", [ry_vec_x_global, ry_vec_y_global, ry_vec_z_global])
                 else:
                     # spatio_temporal_t_x_map_points.append([t, x])
                     # spatio_temporal_t_y_map_points.append([t, y])

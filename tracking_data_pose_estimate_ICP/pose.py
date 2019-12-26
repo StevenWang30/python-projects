@@ -37,8 +37,10 @@ for dir in files:
                                  [0.0, 0.0, 1.0, 0.0],
                                  [0.0, 0.0, 0.0, 1.0]])
         T1, pc1_trans = icp(pc1_o3d, pc2_o3d, trans_init)
-        print(fn1 + "-" + fn2 + ", pose is:", T1)
+        print("seq: ", dir, ", ",  fn1 + "-" + fn2 + ", pose is:\n", T1)
         pose_total = np.append(pose_total, [T1[:3, :]], 0)
+    if int(dir) == 1:
+        IPython.embed()
     pose_total = np.einsum('kli->lik', pose_total)
     save_path = os.path.join(data_root, 'pose', dir + '.mat')
     sio.savemat(save_path, {'pose': pose_total})
