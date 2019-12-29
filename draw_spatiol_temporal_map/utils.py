@@ -8,7 +8,7 @@ import math
 import IPython
 import os
 
-def draw_3d(points, pred_trajectories, label_trajectories, save_path=None, save=False, vis=False):
+def draw_3d(points, pred_trajectories=None, label_trajectories=None, lines=None, save_path=None, save=False, vis=False):
     # points: [frame, x, y]
     # trajectories: [tra_1: [frame, x, y], tra_2: [frame, x, y]...], where frames in each tra are not repeated.
     if not save and not vis:
@@ -18,35 +18,61 @@ def draw_3d(points, pred_trajectories, label_trajectories, save_path=None, save=
     colors = {'g': '#008000', 'r': '#FF0000', 'b': '#0000FF', 'm': '#FF00FF'}
     ax = plt.axes(projection='3d')
 
-    # plot points
-    points = np.array(points)
-    if not len(points) == 0:
-        zdata = points[:, 0]
-        xdata = points[:, 1]
-        ydata = points[:, 2]
-        ax.scatter3D(xdata, ydata, zdata, c=zdata, cmap='Greens')
+    if points is not None:
+        # plot points
+        print("have ", len(points), " points.")
+        points = np.array(points)
+        if not len(points) == 0:
+            zdata = points[:, 0]
+            xdata = points[:, 1]
+            ydata = points[:, 2]
+            ax.scatter3D(xdata, ydata, zdata, c=zdata, cmap='Greens')
 
-    # plot trajectories
-    for i in range(len(pred_trajectories)):
-        tra = np.array(pred_trajectories[i])
-        if not len(tra) == 0:
-            zdata = tra[:, 0]
-            xdata = tra[:, 1]
-            ydata = tra[:, 2]
-            ax.plot3D(xdata, ydata, zdata, 'blue')
+    if pred_trajectories is not None:
+        # plot trajectories
+        print("have ", len(pred_trajectories), " predicted trajectories.")
+        for i in range(len(pred_trajectories)):
+            tra = np.array(pred_trajectories[i])
+            if not len(tra) == 0:
+                zdata = tra[:, 0]
+                xdata = tra[:, 1]
+                ydata = tra[:, 2]
+                ax.plot3D(xdata, ydata, zdata, 'blue', linewidth=3)
 
-    for i in range(len(label_trajectories)):
-        tra = np.array(label_trajectories[i])
-        if not len(tra) == 0:
-            zdata = tra[:, 0]
-            xdata = tra[:, 1]
-            ydata = tra[:, 2]
-            ax.plot3D(xdata, ydata, zdata, 'red')
+    if label_trajectories is not None:
+        print("have ", len(label_trajectories), " label trajectories.")
+        for i in range(len(label_trajectories)):
+            tra = np.array(label_trajectories[i])
+            if not len(tra) == 0:
+                zdata = tra[:, 0]
+                xdata = tra[:, 1]
+                ydata = tra[:, 2]
+                ax.plot3D(xdata, ydata, zdata, 'red')
+
+    if lines is not None:
+        '''
+            quadratic curve equation in x and y direction:
+            x = a*z^2 + b*z + c
+            y = d*z^2 + e*z + f
+            L[i] = [[a, b, c], [d, e, f]]
+        '''
+        print("have ", len(lines), " fitting curves.")
+        max_z = max(points[:, 0])
+        min_z = min(points[:, 0])
+        z = np.arange(min_z, max_z + 1)
+        for i in range(len(lines)):
+            x = lines[i][0][0]*z**2 + lines[i][0][1]*z + lines[i][0][2]
+            y = lines[i][1][0]*z**2 + lines[i][1][1]*z + lines[i][1][2]
+            ax.plot3D(x, y, z, 'yellow')
 
     if save:
+        print("save fig into ", save_path)
         plt.savefig(save_path, dpi=800)
     if vis:
+        print("visualize...")
         plt.show()
+    if not save and not vis:
+        print("do nothing.")
     plt.close('all')
     return 0
 
@@ -121,7 +147,7 @@ def get_trajectory(tracking_data, T_cam_velo, pose_seq, type_whitelist=('Car', '
             continue
         if max(tracking_data[i]['track_id']) > max_trajectory_idx:
             max_trajectory_idx = max(tracking_data[i]['track_id'])
-    max_trajectory_idx = int(max_trajectory_idx)
+    max_trajectory_idx = int(max_trajectory_idx) + 1
 
     trajectories = []
     for t_id in range(max_trajectory_idx):

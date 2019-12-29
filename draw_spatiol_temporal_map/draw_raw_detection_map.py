@@ -14,8 +14,13 @@ parser.add_argument('--output_dir', default='/data/KITTI_object_tracking/spatio-
 parser.add_argument('--detection_data_pkl',
                     default='/data/KITTI_object_tracking/results_PointRCNNTrackNet/detection_pkl/training_result.pkl')
 parser.add_argument('--data-dir', dest='data_dir', default='/data/KITTI_object_tracking/training')
+parser.add_argument('--pose_dir',
+                    default='/data/KITTI_object_tracking/training/pose')
+parser.add_argument('--velodyne_dir',
+                    default='/data/KITTI_object_tracking/training/velodyne')
+parser.add_argument('--frame', default='global', help="frame: -- global, -- inertial")
 
-parser.add_argument('--map_duration_frame', default=20)
+parser.add_argument('--map_duration_frame', default=30)
 
 parser.add_argument('--is_test', default=False)
 parser.add_argument('--seq_start', default= 0 )
@@ -33,6 +38,9 @@ for seq in range(args.seq_start, args.seq_end + 1):
     calib_path = os.path.join(args.data_dir, "calib", '%04d.txt' % seq)
     calib_seq = KittiCalib(calib_path).read_calib_file()
     T_cam_velo = calib_seq.Tr_cam_to_velo
+
+    # get pose
+    pose_seq = load_pose(args.velodyne_dir, args.pose_dir, seq)
 
     # get the detection result in this sequence
     det_seq = []
@@ -59,15 +67,27 @@ for seq in range(args.seq_start, args.seq_end + 1):
             centers = get_center_position_Lidar(det_seq[j], T_cam_velo)
             for c in range(len(centers)):
                 [x, y, z] = centers[c]
-                spatio_temporal_t_x_map_points.append([t, x])
-                spatio_temporal_t_y_map_points.append([t, y])
-                spatio_temporal_t_x_y_map_points.append([t, x, y])
-        print("spatio_temporal_t_x_map_points: ", spatio_temporal_t_x_map_points)
+                if args.frame == 'global':
+                    [x_global, y_global, z_global] = transform_points_from_inertial_to_global([x, y, z], pose_seq[t])
+                    spatio_temporal_t_x_y_map_points.append([t, x_global, y_global])
+                    spatio_temporal_t_x_map_points.append([t, x_global])
+                    spatio_temporal_t_y_map_points.append([t, y_global])
+                    # [ry_vec_x_global, ry_vec_y_global, ry_vec_z_global] = transform_rotation_y_from_inertial_to_global(
+                    #     ry_vecs[c], pose_seq[t])
+                    # print("in ", det_seq[j]['metadata'], ", ry_vec: ", [ry_vec_x_global, ry_vec_y_global, ry_vec_z_global])
+                else:
+                    spatio_temporal_t_x_map_points.append([t, x])
+                    spatio_temporal_t_y_map_points.append([t, y])
+                    spatio_temporal_t_x_y_map_points.append([t, x, y])
+
+        # print("spatio_temporal_t_x_map_points: ", spatio_temporal_t_x_map_points)
+        print("\nseq ", seq)
         print("\nframe from ", start_idx, " to ", end_idx)
-        # print("visualize the t-x spatio-temporal map... time duration is ", args.map_duration_frame)
-        # draw_points(spatio_temporal_t_x_map_points, vis=True)
-        # print("visualize the t-y spatio-temporal map... time duration is ", args.map_duration_frame, "\n\n\n")
-        # draw_points(spatio_temporal_t_y_map_points, vis=True)
+        print("visualize the t-x spatio-temporal map... time duration is ", args.map_duration_frame)
+        draw_points(spatio_temporal_t_x_map_points, vis=True)
+        print("visualize the t-y spatio-temporal map... time duration is ", args.map_duration_frame, "\n\n\n")
+        draw_points(spatio_temporal_t_y_map_points, vis=True)
         print("visualize the t-x-y 3D spatio-temporal map... time duration is ", args.map_duration_frame, "\n\n\n")
-        draw_points(spatio_temporal_t_x_y_map_points, vis=True, v3d=True)
+        draw_3d(spatio_temporal_t_x_y_map_points, None, None, vis=True)
+        # draw_points(spatio_temporal_t_x_y_map_points, vis=True, v3d=True)
 
