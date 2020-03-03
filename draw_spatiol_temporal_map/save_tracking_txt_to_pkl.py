@@ -27,7 +27,8 @@ class TrackingDataObject:
 
 
 # tracking_seq_txt_root = '/data/KITTI_object_tracking/results_PointRCNNTrackNet/pred'
-tracking_seq_txt_root = '/data/KITTI_object_tracking/training/label_02'
+# tracking_seq_txt_root = '/data/KITTI_object_tracking/training/label_02'
+tracking_seq_txt_root = '/data/KITTI_object_tracking/spatio-temporal-map/test_KITTI_upload'
 txt_files = glob.glob(os.path.join(tracking_seq_txt_root, "*.txt"))
 txt_files.sort()
 
@@ -63,9 +64,9 @@ for txt in txt_files:
     current_start = len(tracking_data)
 
 # save_path = '/data/KITTI_object_tracking/results_PointRCNNTrackNet/tracking_pkl/training_result.pkl'
-save_path = '/home/skwang/PYProject/draw_spatiol-temporal_map/pkl_data/training_label_result.pkl'
+# save_path = '/home/skwang/PYProject/draw_spatiol-temporal_map/pkl_data/testing_label_result.pkl'
+save_path = '/home/skwang/PYProject/KITTI_tracking_visualization/KITTI_test_trajectory.pkl'
 print("save pkl into ", save_path)
-IPython.embed()
 with open(save_path, 'wb') as f:
     pickle.dump(tracking_data, f)
 

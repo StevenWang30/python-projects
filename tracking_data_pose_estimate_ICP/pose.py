@@ -12,7 +12,7 @@ from utils import load_bin, draw_result
 import copy
 import scipy.io as sio
 
-data_root = "/data/KITTI_object_tracking/training"
+data_root = "/data/KITTI_object_tracking/testing"
 data_velodyne_root = data_root + '/velodyne'
 files = os.listdir(data_velodyne_root)
 files.sort(key=lambda x: int(x))
@@ -22,6 +22,7 @@ for dir in files:
     bin_files.sort(key=lambda x: int(x.split('.')[0]))
     pose_total = np.zeros((0, 3, 4))
     for i in range(len(bin_files) - 1):
+        print('compose dir %d, %d / %d' % (int(dir), i, len(bin_files) - 1))
         fn1 = bin_files[i]
         f1 = os.path.join(data_velodyne_root, dir, fn1)
         fn2 = bin_files[i + 1]
@@ -39,8 +40,8 @@ for dir in files:
         T1, pc1_trans = icp(pc1_o3d, pc2_o3d, trans_init)
         print("seq: ", dir, ", ",  fn1 + "-" + fn2 + ", pose is:\n", T1)
         pose_total = np.append(pose_total, [T1[:3, :]], 0)
-    if int(dir) == 1:
-        IPython.embed()
+    # if int(dir) == 1:
+    #     IPython.embed()
     pose_total = np.einsum('kli->lik', pose_total)
     save_path = os.path.join(data_root, 'pose', dir + '.mat')
     sio.savemat(save_path, {'pose': pose_total})

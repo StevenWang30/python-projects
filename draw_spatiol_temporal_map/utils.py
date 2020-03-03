@@ -1,8 +1,8 @@
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
-from tracking_utils.KITTI_dataset_utils.kittitrackingdata_second import *
-from tracking_utils.KITTI_dataset_utils.dataset import transform_points
+from utils_for_tracking.KITTI_dataset_utils.kittitrackingdata_second import *
+from utils_for_tracking.KITTI_dataset_utils.dataset import transform_points
 import scipy.io as sio
 import math
 import IPython
@@ -18,6 +18,10 @@ def draw_3d(points, pred_trajectories=None, label_trajectories=None, lines=None,
     colors = {'g': '#008000', 'r': '#FF0000', 'b': '#0000FF', 'm': '#FF00FF'}
     ax = plt.axes(projection='3d')
 
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
+    ax.set_zlabel('t')
+
     if points is not None:
         # plot points
         print("have ", len(points), " points.")
@@ -26,7 +30,7 @@ def draw_3d(points, pred_trajectories=None, label_trajectories=None, lines=None,
             zdata = points[:, 0]
             xdata = points[:, 1]
             ydata = points[:, 2]
-            ax.scatter3D(xdata, ydata, zdata, c=zdata, cmap='Greens')
+            ax.scatter3D(xdata, ydata, zdata, c=zdata, cmap='Greens', s=5, alpha=0.75)
 
     if pred_trajectories is not None:
         # plot trajectories
@@ -64,7 +68,7 @@ def draw_3d(points, pred_trajectories=None, label_trajectories=None, lines=None,
             x = lines[i][0][0]*z**2 + lines[i][0][1]*z + lines[i][0][2]
             y = lines[i][1][0]*z**2 + lines[i][1][1]*z + lines[i][1][2]
             ax.plot3D(x, y, z, 'yellow')
-
+    # IPython.embed()
     if save:
         print("save fig into ", save_path)
         plt.savefig(save_path, dpi=800)
@@ -140,7 +144,7 @@ def get_rotation_y_vec_Lidar(det_frame, T_cam_velo):
     return vecs
 
 
-def get_trajectory(tracking_data, T_cam_velo, pose_seq, type_whitelist=('Car', 'Van'), frame='global'):
+def get_trajectory(tracking_data, T_cam_velo, pose_seq=None, type_whitelist=('Car', 'Van'), frame='global'):
     max_trajectory_idx = 0
     for i in range(len(tracking_data)):
         if len(tracking_data[i]['track_id']) == 0:

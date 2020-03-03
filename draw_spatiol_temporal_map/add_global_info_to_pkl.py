@@ -9,11 +9,11 @@ from utils import *
 """Parse input arguments."""
 parser = argparse.ArgumentParser(description='add global')
 parser.add_argument('--detection_data_pkl',
-                    default='/data/KITTI_object_tracking/results_PointRCNNTrackNet/detection_pkl/training_result.pkl')
-parser.add_argument('--tracking_predict_pkl',
-                    default='/data/KITTI_object_tracking/results_PointRCNNTrackNet/tracking_pkl/training_result.pkl')
-parser.add_argument('--tracking_label_pkl',
-                    default='/home/skwang/PYProject/draw_spatiol-temporal_map/pkl_data/training_label_result.pkl')
+                    default='/data/KITTI_object_tracking/results_PointRCNNTrackNet/detection_pkl/training_result_RPN035_RCNN09.pkl')
+# parser.add_argument('--tracking_predict_pkl',
+#                     default='/data/KITTI_object_tracking/results_PointRCNNTrackNet/tracking_pkl/training_result.pkl')
+# parser.add_argument('--tracking_label_pkl',
+#                     default='/home/skwang/PYProject/draw_spatiol-temporal_map/pkl_data/training_label_result.pkl')
 parser.add_argument('--pose_dir',
                     default='/data/KITTI_object_tracking/training/pose')
 parser.add_argument('--velodyne_dir',

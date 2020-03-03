@@ -12,12 +12,14 @@ parser.add_argument('--display', dest='display', help='Display online tracker ou
                     action='store_true')
 parser.add_argument('--output_dir', default='/data/KITTI_object_tracking/spatio-temporal-map/raw_detection_map')
 
+# parser.add_argument('--detection_data_pkl',
+#                     default='/data/KITTI_object_tracking/results_PointRCNNTrackNet/detection_pkl/training_result.pkl')
 parser.add_argument('--detection_data_pkl',
-                    default='/data/KITTI_object_tracking/results_PointRCNNTrackNet/detection_pkl/training_result.pkl')
+                    default='/data/KITTI_object_tracking/results_PointRCNNTrackNet/detection_pkl/training_result_RPN035_RCNN085.pkl')
 parser.add_argument('--tracking_predict_pkl',
                     default='/data/KITTI_object_tracking/results_PointRCNNTrackNet/tracking_pkl/training_result.pkl')
 parser.add_argument('--tracking_label_pkl',
-                    default='/home/skwang/PYProject/draw_spatiol-temporal_map/pkl_data/training_label_result.pkl')
+                    default='/home/skwang/PYProject/draw_spatiol_temporal_map/pkl_data/training_label_result.pkl')
 parser.add_argument('--pose_dir',
                     default='/data/KITTI_object_tracking/training/pose')
 parser.add_argument('--velodyne_dir',
@@ -28,7 +30,7 @@ parser.add_argument('--method', default='PointRCNN')
 
 parser.add_argument('--frame', default='global', help="frame: -- global, -- inertial")
 
-parser.add_argument('--map_duration_frame', default=200)
+parser.add_argument('--map_duration_frame', default=10)
 
 parser.add_argument('--is_test', default=False)
 parser.add_argument('--seq_start', default= 20 )
@@ -49,7 +51,7 @@ tracking_data = pickle.load(open(args.tracking_predict_pkl, 'rb'))
 tracking_label_data = pickle.load(open(args.tracking_label_pkl, 'rb'))
 
 for seq in range(args.seq_start, args.seq_end + 1):
-    output_dir = os.path.join(args.output_dir, '%4d' % seq)
+    output_dir = os.path.join(args.output_dir, '%04d' % seq)
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
@@ -64,8 +66,8 @@ for seq in range(args.seq_start, args.seq_end + 1):
     # map_num = math.ceil(len(det_seq) / args.map_duration_frame)
     MAX_ = 999999
     for i in range(MAX_):
-        start_idx = args.map_duration_frame * i
-        end_idx = args.map_duration_frame * (i + 1)
+        start_idx = int(args.map_duration_frame * i)
+        end_idx = int(args.map_duration_frame * (i + 1))
         # get the detection result in this sequence
         det_seq = []
         for i in range(len(dt_data)):
@@ -95,7 +97,7 @@ for seq in range(args.seq_start, args.seq_end + 1):
                 break
             tracking_seq.append(tracking_data[i])
 
-        # get the predict tracking result in this sequence
+        # get the label tracking result in this sequence
         tracking_label_seq = []
         for i in range(len(tracking_label_data)):
             if tracking_label_data[i]['metadata']['image_seq'] < seq:
@@ -142,4 +144,5 @@ for seq in range(args.seq_start, args.seq_end + 1):
 
         pred_trajectories = get_trajectory(tracking_seq, T_cam_velo, pose_seq, type_whitelist, frame=args.frame)
         label_trajectories = get_trajectory(tracking_label_seq, T_cam_velo, pose_seq, type_whitelist, frame=args.frame)
+        IPython.embed()
         draw_3d(spatio_temporal_t_x_y_map_points, pred_trajectories, label_trajectories, vis=True)

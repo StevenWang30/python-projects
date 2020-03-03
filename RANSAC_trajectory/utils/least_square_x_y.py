@@ -45,12 +45,16 @@ def test_least_square_x_y(points, L):
     print(ans)
 
 
-def evaluate_distance_x_y(data, L, threshold=2):
+def evaluate_distance_x_y(data, L, threshold=2, frame='global'):
     min_dis = 999
     min_idx = -1
-    for i in range(len(data['global_location'])):
-        x = data['global_location'][i][0]
-        y = data['global_location'][i][1]
+    if frame == 'global':
+        location = data['global_location']
+    else:
+        location = data['location']
+    for i in range(len(location)):
+        x = location[i][0]
+        y = location[i][1]
         z = data['metadata']['image_idx']
         dis = abs(error(L[0], z, x)) + abs(error(L[1], z, y))
         # print("location: ", data['global_location'][i], " distance: ", dis)
