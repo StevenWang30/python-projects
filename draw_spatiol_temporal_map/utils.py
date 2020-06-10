@@ -144,7 +144,7 @@ def get_rotation_y_vec_Lidar(det_frame, T_cam_velo):
     return vecs
 
 
-def get_trajectory(tracking_data, T_cam_velo, pose_seq=None, type_whitelist=('Car', 'Van'), frame='global'):
+def get_carla_trajectory(tracking_data, type_whitelist, frame):
     max_trajectory_idx = 0
     for i in range(len(tracking_data)):
         if len(tracking_data[i]['track_id']) == 0:
@@ -162,14 +162,99 @@ def get_trajectory(tracking_data, T_cam_velo, pose_seq=None, type_whitelist=('Ca
                 pos = temp_list.index(t_id)
                 if not tracking_data[i]['name'][pos] in type_whitelist:
                     continue
-                centers = get_center_position_Lidar(tracking_data[i], T_cam_velo)
+                if frame == 'inertial':
+                    centers = tracking_data[i]['location']
+                elif frame == 'global':
+                    centers = tracking_data[i]['global_location']
                 [x, y, z] = centers[pos]
-                t = tracking_data[i]['metadata']['image_idx']
-                if frame == 'global':
-                    [x_global, y_global, z_global] = transform_points_from_inertial_to_global([x, y, z], pose_seq[t])
-                    trajectory_i.append([t, x_global, y_global])
+                try:
+                    t = tracking_data[i]['metadata']['image_idx']
+                except:
+                    t = tracking_data[i]['metadata']['frame_idx']
+                trajectory_i.append([t, x, y])
+        if len(trajectory_i) == 0:
+            continue
+        trajectories.append(trajectory_i)
+
+    return trajectories
+
+
+def get_nuscenes_trajectory(tracking_data, type_whitelist, frame):
+    max_trajectory_idx = 0
+    for i in range(len(tracking_data)):
+        if len(tracking_data[i]['track_id']) == 0:
+            continue
+        if max(tracking_data[i]['track_id']) > max_trajectory_idx:
+            max_trajectory_idx = max(tracking_data[i]['track_id'])
+    max_trajectory_idx = int(max_trajectory_idx) + 1
+
+    trajectories = []
+    for t_id in range(max_trajectory_idx):
+        trajectory_i = []
+        for i in range(len(tracking_data)):
+            if t_id in tracking_data[i]['track_id']:
+                temp_list = list(tracking_data[i]['track_id'])
+                pos = temp_list.index(t_id)
+                if not tracking_data[i]['name'][pos] in type_whitelist:
+                    continue
+                if frame == 'inertial':
+                    centers = tracking_data[i]['location']
+                elif frame == 'global':
+                    centers = tracking_data[i]['global_location']
+                [x, y, z] = centers[pos]
+                try:
+                    t = tracking_data[i]['metadata']['image_idx']
+                except:
+                    t = tracking_data[i]['metadata']['frame_idx']
+                trajectory_i.append([t, x, y])
+        if len(trajectory_i) == 0:
+            continue
+        trajectories.append(trajectory_i)
+
+    return trajectories
+
+
+def get_trajectory(tracking_data, T_cam_velo, pose_seq=None, type_whitelist=('Car', 'Van'), frame='global'):
+    max_trajectory_idx = 0
+    for i in range(len(tracking_data)):
+        if len(tracking_data[i]['track_id']) == 0:
+            continue
+        if max(tracking_data[i]['track_id']) > max_trajectory_idx:
+            max_trajectory_idx = max(tracking_data[i]['track_id'])
+    max_trajectory_idx = int(max_trajectory_idx) + 1
+
+    trajectories = []
+    for t_id in range(max_trajectory_idx):
+        trajectory_i = []
+        for i in range(len(tracking_data)):
+            if t_id in tracking_data[i]['track_id']:
+                temp_list = list(tracking_data[i]['track_id'])
+                pos = temp_list.index(t_id)
+                if type_whitelist is not None:
+                    if not tracking_data[i]['name'][pos] in type_whitelist:
+                        continue
+                try:
+                    t = tracking_data[i]['metadata']['image_idx']
+                except:
+                    t = tracking_data[i]['metadata']['frame_idx']
+                if T_cam_velo is not None:
+                    centers = get_center_position_Lidar(tracking_data[i], T_cam_velo)
+                    [x, y, z] = centers[pos]
+                    
+                    if frame == 'global':
+                        [x_global, y_global, z_global] = transform_points_from_inertial_to_global([x, y, z],
+                                                                                                  pose_seq[t])
+                        trajectory_i.append([t, x_global, y_global])
+                    else:
+                        trajectory_i.append([t, x, y])
                 else:
+                    if frame == 'global':
+                        centers = tracking_data[i]['global_location']
+                    else:
+                        centers = tracking_data[i]['location']
+                    [x, y, z] = centers[pos]
                     trajectory_i.append([t, x, y])
+                
         if len(trajectory_i) == 0:
             continue
         trajectories.append(trajectory_i)
@@ -211,10 +296,21 @@ def load_pose(velodyne_dir, pose_dir, seq):
     return data
 
 
-def transform_points_from_inertial_to_global(point, T_inertial_global):
-    point_4 = np.array(point + [1])
+def transform_point_from_inertial_to_global(point, T_inertial_global):
+    point_4 = np.array(list(point) + [1])
     point_global = np.dot(np.linalg.inv(T_inertial_global), point_4)
     return point_global[:3]
+
+
+def transform_points_from_inertial_to_global(points, T_inertial_global):
+    if len(points) == 0:
+        return points
+    # print('points: ', points)
+    points = np.array(points)
+    points_4 = np.append(points, np.ones((points.shape[0], 1)), axis=-1)
+    points_global = np.transpose(np.dot(np.linalg.inv(T_inertial_global), np.transpose(points_4)))
+    return points_global[:, :3]
+
 
 def transform_rotation_y_from_inertial_to_global(ry_vec, T_inertial_global):
     vec_cam = np.array(list(ry_vec) + [1])

@@ -6,12 +6,7 @@ def calc_theta_degree_in_z(point):
     [x,y,z] = point
     theta_radian = math.atan(z / math.sqrt(x * x + y * y))
     theta = theta_radian * 180 / np.pi
-    if (theta >= 2):
-        print("Theta > 2, theta = ", theta)
-        theta = 2
-    if (theta <= -24.5):
-        print("Theta <= -24.5, theta = ", theta)
-        theta = -24.5+0.001
+
     return theta
 
 
@@ -48,6 +43,12 @@ def pointcloud_to_rangeimage(pointcloud, lidar_angular_xy_range, max_lidar_angul
         degree_in_xy = calc_theta_degree_in_xy(point_world)
         y_rangeimage = math.floor(degree_in_xy / lidar_angular_xy_range * range_y)
         degree_in_z = calc_theta_degree_in_z(point_world)
+        if (degree_in_z >= max_lidar_angular_z):
+            print("Theta > %f, degree_in_z = %f" % (max_lidar_angular_z, degree_in_z))
+            degree_in_z = max_lidar_angular_z
+        if (degree_in_z <= min_lidar_angular_z):
+            print("Theta < %f, degree_in_z = %f" % (min_lidar_angular_z, degree_in_z))
+            degree_in_z = min_lidar_angular_z + 0.001
         x_rangeimage = math.floor((max_lidar_angular_z - degree_in_z) / (max_lidar_angular_z - min_lidar_angular_z) * range_x)
 
         depth = math.sqrt(x_world * x_world + y_world * y_world + z_world * z_world)

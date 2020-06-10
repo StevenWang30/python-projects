@@ -9,8 +9,8 @@ class TrackingDataObject:
     def __init__(self, seq, frame):
         self.object = {}
         self.object['metadata'] = {}
-        self.object['metadata']['image_seq'] = seq
-        self.object['metadata']['image_idx'] = frame
+        self.object['metadata']['seq_idx'] = seq
+        self.object['metadata']['frame_idx'] = frame
         self.object['name'] = []
         self.object['track_id'] = np.array([])
         self.object['truncated'] = np.array([])
